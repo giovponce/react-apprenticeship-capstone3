@@ -5,8 +5,8 @@ export default function Login() {
   return (
     <div>
             <StyledH1>Register</StyledH1>
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="Password" />
+            <input type="text" placeholder="newUsername" />
+            <input type="password" placeholder="newPassword" />
             <button>Register</button>
             <br/><br/>
 
