@@ -5,6 +5,17 @@ export const StyledLinkForHamburguer = styled(Link)`
     text-decoration: none;
 `;
 
+export const StyledFakeLinkForHamburguer = styled.p`
+    cursor: pointer;
+    display: contents;
+    text-decoration: none;
+    font-size: 1.2rem;
+
+    &:hover {
+        color: #00bcd4;
+    }
+`;
+
 export const StyledUlForHamburguer = styled.ul`
     position: absolute;
     width: 50%;

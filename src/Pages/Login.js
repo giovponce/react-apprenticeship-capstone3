@@ -1,24 +1,65 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyledH1 } from '../Utils/Styled Components/StyledText';
+import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '../firebase-config';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  return (
-    <div>
-            <StyledH1>Register</StyledH1>
-            <input type="text" placeholder="newUsername" />
-            <input type="password" placeholder="newPassword" />
-            <button>Register</button>
-            <br/><br/>
+    const navigate = useNavigate();
+    
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState(''); 
 
-            <StyledH1>Login</StyledH1>
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="Password" />
-            <button>Login</button>
-            <br/><br/>
-        
+    const [user, setUser] = useState({});
 
-            <p>logged user: </p>
-            <button>Logout</button>
-    </div>
-  )
+    onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+    });
+
+
+    
+
+    const login = async () => {
+        try{
+            const user = await signInWithEmailAndPassword(auth, email, password);
+            console.log(user);
+            navigate('/');
+        }catch(error){
+            console.error(error);
+        }
+    };
+
+    const logout = async () => {
+        await signOut(auth);
+    };
+
+    return (
+        <div>
+            {user ? (
+                <>
+                    <StyledH1>Already logged in as {user?.email}</StyledH1>
+                    <button onClick={logout}>Logout</button>
+                </>
+            ):(
+                <>
+                    <StyledH1>Login</StyledH1>
+                    <input type="text" placeholder="Email" 
+                        onChange={(event) => {
+                            setEmail(event.target.value);
+                        }} />
+                    <input type="password" placeholder="Password" 
+                        onChange={(event) => {
+                            setPassword(event.target.value);
+                        }} />
+                    <button onClick={login}>Login</button>
+
+                    <p>New to this page? Please <a href="/signin">Sign In</a></p>
+                </>
+            )}
+            
+            
+            
+
+        </div>
+    )
 }
