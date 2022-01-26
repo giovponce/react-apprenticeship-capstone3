@@ -1,16 +1,16 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import Login from '../Pages/Login'
+import SignIn from '../Pages/SignIn'
 
-describe('login page', () => {
+describe('SignIn page', () => {
     test('shows the input for email', async () => {
-        render(<Login />);
+        render(<SignIn />);
         await waitFor(() => {
             const input = screen.getByPlaceholderText('Email');
             expect(input).toBeInTheDocument();
         });
     });
     test('shows the input for pws', async () => {
-        render(<Login />);
+        render(<SignIn />);
         await waitFor(() => {
             const input = screen.getByPlaceholderText('Password');
             expect(input).toBeInTheDocument();

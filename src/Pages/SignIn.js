@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase-config';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { StyledH1 } from '../Utils/Styled Components/StyledText';
 
 export default function SignIn() {
-    const navigate = useNavigate();
+    const navigate = useHistory();
 
     const [registerEmail, setRegisterEmail] = useState('');
     const [registerPassword, setRegisterPassword] = useState('');
@@ -19,7 +19,7 @@ export default function SignIn() {
         try{
             const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);            
             console.log(user);
-            navigate('/');
+            navigate.push('/');
         }catch(error){
             console.error(error);
         }
@@ -35,11 +35,11 @@ export default function SignIn() {
             <> 
                 <StyledH1>Register</StyledH1>
                 <input 
-                    type="text" placeholder="newEmail" 
+                    type="text" placeholder="Email" 
                     onChange={(event) => {
                         setRegisterEmail(event.target.value);
                     }}/>
-                <input type="password" placeholder="newPassword"
+                <input type="password" placeholder="Password"
                     onChange={(event) => {
                         setRegisterPassword(event.target.value);
                     }} />

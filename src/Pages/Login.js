@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { StyledH1 } from '../Utils/Styled Components/StyledText';
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase-config';
-import { useNavigate } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export default function Login() {
-    const navigate = useNavigate();
+    const navigate = useHistory();
     
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState(''); 
@@ -23,7 +23,7 @@ export default function Login() {
         try{
             const user = await signInWithEmailAndPassword(auth, email, password);
             console.log(user);
-            navigate('/');
+            navigate.push('/');
         }catch(error){
             console.error(error);
         }

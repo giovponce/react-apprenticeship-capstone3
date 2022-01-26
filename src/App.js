@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Header from './Components/Header/Header';
 import Home from './Pages/Home';
 import Archive from './Pages/Archive';
@@ -13,13 +13,23 @@ function App() {
     <BrowserRouter>
       <Header/>
       <StyledContainer>
-        <Routes>
-          <Route path="/" element={<Home />}/>
-          <Route path="/login" element={<Login />}/>
-          <Route path="/signin" element={<SignIn />}/>
-          <Route path="/archive" element={<Archive />}/>
-          <Route path="*" element={<NotFound/>}/>
-        </Routes>
+        <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signin">
+              <SignIn />
+            </Route>
+            <Route exact path="/archive">
+              <Archive />
+            </Route>
+            <Route exact path="*">
+              <NotFound />
+            </Route>
+        </Switch>
       </StyledContainer>
     </BrowserRouter>
   );
