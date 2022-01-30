@@ -3,6 +3,7 @@ import Note from '../Components/Note';
 import { StyledH1 } from '../Utils/Styled Components/StyledText';
 import { db } from '../firebase-config';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { StyledNotesContainer } from '../Utils/Styled Components/StyledContainer';
 
 export default function Home() {
 
@@ -23,7 +24,8 @@ export default function Home() {
   useEffect(() => {
     const fetchNotes = async () => {
       const data = await getDocs(notesCollectionRef);
-      setNotes(data.docs.map(doc => ({...doc.data(), id: doc.id})));
+      const allNotes = data.docs.map(doc => ({...doc.data(), id: doc.id}));
+      setNotes(allNotes.filter(note => !note.archived));
     }
 
     fetchNotes();
@@ -36,11 +38,13 @@ export default function Home() {
       <input onChange={(event)=>{setContent(event.target.value)}} type="text" placeholder="content" />
       <button onClick={addNote}>Add note</button>
 
-      {notes.map((note) => {
-        return (
-          <Note key={note.id} note={note} />
-        )
-      })}
+      <StyledNotesContainer>
+        {notes.map((note) => {
+          return (
+            <Note key={note.id} note={note} archive={true} />
+          )
+        })}
+      </StyledNotesContainer>
     </div>
   )
 }
