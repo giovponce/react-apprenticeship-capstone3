@@ -3,7 +3,7 @@ import Note from '../Components/Note';
 import { StyledH1 } from '../Utils/Styled Components/StyledText';
 import { db } from '../firebase-config';
 import { collection, getDocs } from 'firebase/firestore';
-import { StyledNotesContainer } from '../Utils/Styled Components/StyledContainer';
+import { StyledMainContainer, StyledNotesContainer } from '../Utils/Styled Components/StyledContainer';
 
 export default function Home() {
 
@@ -21,7 +21,7 @@ export default function Home() {
   });
 
   return (
-    <div>
+      <StyledMainContainer>
       <StyledH1>Archive</StyledH1>
 
       <StyledNotesContainer>
@@ -31,6 +31,6 @@ export default function Home() {
           )
         })}
       </StyledNotesContainer>
-    </div>
+      </StyledMainContainer>
   )
 }

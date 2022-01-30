@@ -3,7 +3,7 @@ import Note from '../Components/Note';
 import { StyledH1 } from '../Utils/Styled Components/StyledText';
 import { db } from '../firebase-config';
 import { collection, getDocs, addDoc } from 'firebase/firestore';
-import { StyledNotesContainer } from '../Utils/Styled Components/StyledContainer';
+import { StyledNotesContainer, StyledMainContainer } from '../Utils/Styled Components/StyledContainer';
 
 export default function Home() {
 
@@ -11,11 +11,13 @@ export default function Home() {
   const notesCollectionRef = collection(db, 'notes');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [color, setColor] = useState('#fff');
 
   const addNote = async () => {
     await addDoc(notesCollectionRef, {
       title: title,
-      content : content
+      content : content,
+      color : color
     });
     setTitle('');
     setContent('');
@@ -32,10 +34,12 @@ export default function Home() {
   });
 
   return (
-    <div>
+    <StyledMainContainer>
       <StyledH1>Home</StyledH1>
       <input onChange={(event)=>{setTitle(event.target.value)}} type="text" placeholder="title" />
       <input onChange={(event)=>{setContent(event.target.value)}} type="text" placeholder="content" />
+      <input onChange={(event)=>{setColor(event.target.value)}} type="color" value={color}></input>
+
       <button onClick={addNote}>Add note</button>
 
       <StyledNotesContainer>
@@ -45,6 +49,6 @@ export default function Home() {
           )
         })}
       </StyledNotesContainer>
-    </div>
+    </StyledMainContainer>
   )
 }

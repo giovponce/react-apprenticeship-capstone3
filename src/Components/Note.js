@@ -39,7 +39,7 @@ export default function Note({note, archive}) {
     }
 
     return (
-        <StyledNoteContainer>
+        <StyledNoteContainer color={note?.color}>
             <StyledTitle>{note?.title}</StyledTitle>
             <StyledDescription>{note?.content}</StyledDescription>
             <button onClick={()=>{updateNote(note.id, note.title, note.content)}}>Edit</button>
