@@ -14,6 +14,7 @@ import { auth } from './firebase-config';
 function App() {
 
   const [user, setUser] = useState({});
+  const [term, setTerm] = useState('');
 
   onAuthStateChanged(auth, (currentUser) => {
     let isMounted = true;
@@ -26,6 +27,7 @@ function App() {
 
   const getSearchResult = (newSearch) => {
     console.log(newSearch);
+    setTerm(newSearch)
   }
 
   return (
@@ -35,7 +37,7 @@ function App() {
         {user ? (
           <Switch>
             <Route exact path="/">
-              <Home />
+              <Home term={term}/>
             </Route>
             <Route exact path="/login">
               <Login />
@@ -44,7 +46,7 @@ function App() {
               <SignIn />
             </Route>
             <Route exact path="/archive">
-              <Archive />
+              <Archive term={term} />
             </Route>
             <Route exact path="*">
               <NotFound />

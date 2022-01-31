@@ -46,6 +46,7 @@ export const StyledNoteContainer = styled.div`
 
 export const StyledNotesContainer = styled.div`
     display: flex;
+    flex-wrap: wrap;
 `;
 
 export const StyledMainContainer = styled.div`

@@ -1,51 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyledNoteContainer } from '../Utils/Styled Components/StyledContainer';
 import { StyledDescription, StyledTitle } from '../Utils/Styled Components/StyledText';
-import { updateDoc, deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../firebase-config';
+import { StyledInputTitle, StyledInputContent, InputContainer, ButtonForCreation, StyledColorInput, ColorLabel } from '../Utils/Styled Components/StyledContainer';
+import { MdOutlinePalette } from "react-icons/md";
 
 
 
-export default function Note({note, archive}) {
 
+export default function Note({note, onDelete, onArchive, onUnArchive, id, onEdit, showArchive}) {
+    const [editMode, setEditMode] = useState(false);
+    const [newTitle, setTitle] = useState('');
+    const [newContent, setContent] = useState('');
+    const [newColor, setColor] = useState('#ffffff');
 
-    const updateNote = async (id, title, content) => {
-        const noteDoc = doc(db, "notes", id);
-        const newNote = {
-            title: title + 'modified from app',
-            content: content + 'modified from app'
-        }
-        await updateDoc(noteDoc, newNote);
-    }
-
-    const archiveNote = async (id) => {
-        const noteDoc = doc(db, "notes", id);
-        const newNote = {
-            archived: true
-        }
-        await updateDoc(noteDoc, newNote);
-    }
-
-    const unarchiveNote = async (id) => {
-        const noteDoc = doc(db, "notes", id);
-        const newNote = {
-            archived: false
-        }
-        await updateDoc(noteDoc, newNote);
-    }
-
-    const deleteNote = async (id) => {
-        const noteDoc = doc(db, "notes", id);
-        await deleteDoc(noteDoc);
-    }
 
     return (
         <StyledNoteContainer color={note?.color}>
-            <StyledTitle>{note?.title}</StyledTitle>
-            <StyledDescription>{note?.content}</StyledDescription>
-            <button onClick={()=>{updateNote(note.id, note.title, note.content)}}>Edit</button>
-            {archive ? <button onClick={()=>{archiveNote(note.id)}}>Archive</button> : <button onClick={()=>{unarchiveNote(note.id)}}>Unarchive</button>}
-            <button onClick={()=>{deleteNote(note.id)}}>Delete</button>
+            {editMode ? (
+                <>
+                <InputContainer>
+                    <StyledInputTitle onChange={(event)=>{setTitle(event.target.value)}} type="text" placeholder="Title" />
+                    <StyledInputContent onChange={(event)=>{setContent(event.target.value)}} type="text" placeholder="Take a note..." />
+                    <ColorLabel><MdOutlinePalette/>
+                        <StyledColorInput onChange={(event)=>{setColor(event.target.value)}} type="color" value={newColor} list="presets"/>
+                        <datalist id="presets">
+                        <option value="#ffffff"/>
+                        <option value="#F28B82"/>
+                        <option value="#FABC02"/>
+                        <option value="#FFF474"/>
+                        <option value="#CCFF8F"/>
+                        <option value="#A7FFEB"/>
+                        <option value="#CBF0F8"/>
+                        <option value="#AECBFA"/>
+                        <option value="#D7AEFB"/>
+                        <option value="#FBCFE8"/>
+                        <option value="#E6C9A8"/>
+                        <option value="#E8EAED"/>
+                        </datalist>
+                    </ColorLabel>
+                    <ButtonForCreation onClick={(event)=>{
+                        onEdit(id, newTitle, newContent, newColor);
+                        setEditMode(false);
+                    }}>Close</ButtonForCreation>
+                </InputContainer>
+                </>
+            ) : (
+                <>
+                <StyledTitle>{note?.title}</StyledTitle>
+                <StyledDescription>{note?.content}</StyledDescription>
+                <button onClick={() => setEditMode(true)}>Edit</button>
+                {showArchive ? <button  onClick={() => onArchive(id)}>Archive</button> : <button onClick={()=>{onUnArchive(id)}}>Unarchive</button>}
+                <button onClick={() => onDelete(id)}>Delete</button>
+                </>
+            )}
+            
         </StyledNoteContainer>
     )
 }
