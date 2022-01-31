@@ -22,7 +22,7 @@ export const StyledDescription = styled.p`
 
 export const StyledLink = styled(Link)`
     text-decoration: none;
-    color: white;
+    color: #5f6368;
     font-family: sans-serif;
     font-size: 1.2rem;
     text-transform: capitalize;
@@ -36,7 +36,7 @@ export const StyledFakeLink = styled.p`
     cursor: pointer;
     display: contents;
     text-decoration: none;
-    color: white;
+    color: #5f6368;
     font-family: sans-serif;
     font-size: 1.2rem;
     text-transform: capitalize;
@@ -44,4 +44,10 @@ export const StyledFakeLink = styled.p`
     &:hover {
         color: #00bcd4;
     }
+`;
+
+export const StyledP = styled.p`
+    margin: auto;
+    text-align: center;
+    padding-top: 3em;
 `;

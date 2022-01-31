@@ -8,13 +8,14 @@ import { db } from '../firebase-config';
 
 export default function Note({note, archive}) {
 
+
     const updateNote = async (id, title, content) => {
         const noteDoc = doc(db, "notes", id);
         const newNote = {
             title: title + 'modified from app',
             content: content + 'modified from app'
         }
-        await updateDoc(noteDoc, newNote)
+        await updateDoc(noteDoc, newNote);
     }
 
     const archiveNote = async (id) => {
@@ -22,7 +23,7 @@ export default function Note({note, archive}) {
         const newNote = {
             archived: true
         }
-        await updateDoc(noteDoc, newNote)
+        await updateDoc(noteDoc, newNote);
     }
 
     const unarchiveNote = async (id) => {
@@ -30,7 +31,7 @@ export default function Note({note, archive}) {
         const newNote = {
             archived: false
         }
-        await updateDoc(noteDoc, newNote)
+        await updateDoc(noteDoc, newNote);
     }
 
     const deleteNote = async (id) => {

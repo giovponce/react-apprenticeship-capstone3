@@ -4,22 +4,22 @@ export const StyledUl = styled.ul`
     display: flex;
     justify-content: flex-end;
     list-style-type: none;
-    background-color: #333;
+    background-color: white;
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
+    color: #5f6368;
 `;
 
 
 export const StyledLi = styled.li`
     text-decoration: none !important;
-    color: white;
-    text-align: center;
+    color: #5f6368;
     padding: 2%;
 `;
 
 export const StyledMobileNav = styled.nav`
-    display: none;
+    display: block;
     @media (max-width: 768px) {
         display: block;
     }

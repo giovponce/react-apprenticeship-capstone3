@@ -2,13 +2,19 @@ import { StyledNav, StyledLi, StyledUl } from "../../Utils/Styled Components/Sty
 import { StyledLink, StyledFakeLink } from "../../Utils/Styled Components/StyledText";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase-config";
+import Search from "./Search";
+import { useHistory } from 'react-router-dom';
 
-const Navigation = ({ user }) => {
-    console.log(user);
+
+const Navigation = ({ user, getSearchResult }) => {
+    const navigate = useHistory();
+
 
     const logout = async () => {
         await signOut(auth);
+        navigate.push('/login');
     };
+
 
     return (
         <> 
@@ -16,6 +22,7 @@ const Navigation = ({ user }) => {
         <StyledUl>
             {user ? (
                 <>
+                    <Search getSearchResult={getSearchResult}/>
                     <StyledLi>
                         <StyledLink to="/">Notes</StyledLink>
                     </StyledLi>

@@ -18,14 +18,15 @@ export const StyledFakeLinkForHamburguer = styled.p`
 
 export const StyledUlForHamburguer = styled.ul`
     position: absolute;
-    width: 50%;
+    width: 30%;
     margin: -100px 0 0 -50px;
     padding: 50px;
     padding-top: 125px;
-    background: #484848;
+    background: white;
     list-style-type: none;   
     transform-origin: 0% 0%;
     transform: translate(-100%, 0);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
     transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
     z-index: 1;
     flex-flow: column;
@@ -42,7 +43,7 @@ export const StyledSpanForHamburguer = styled.span`
     height: 4px;
     margin-bottom: 5px;
     position: relative;
-    background: white;
+    background: #5f6368;
     border-radius: 3px;
     z-index: 1;
     transform-origin: 4px 0px;
@@ -65,7 +66,7 @@ export const StyledInputForHamburguer = styled.input`
 `;
 
 export const StyledHamburguerContainer = styled.div`
-    display: block;
+    display: inline-block;
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -76,10 +77,12 @@ export const StyledHamburguerContainer = styled.div`
     // z-index: 1;
     // -webkit-user-select: none;
     // user-select: none;
-    background-color: #333;
+    background-color: white;
+    width: 95vw;
+    border-bottom: 1px solid #E4E4E4;
     ${StyledLinkForHamburguer} {
         text-decoration: none;
-        color: white;
+        color: #5f6368;
         font-family: sans-serif;
         font-size: 1.2rem;
         text-transform: capitalize;
@@ -89,7 +92,7 @@ export const StyledHamburguerContainer = styled.div`
         }
     }
     ${StyledLinkForHamburguer}:hover{
-        color: #00bcd4;
+        color: #5f6368;
     }
     ${StyledSpanForHamburguer}:first-child{
       transform-origin: 0% 0%;
@@ -116,3 +119,4 @@ export const StyledHamburguerContainer = styled.div`
         transform: none;
     }
 `;
+

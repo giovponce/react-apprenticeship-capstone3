@@ -1,21 +1,15 @@
-import React, { useState } from "react";
-import Navigation from "./Navigation";
+import React from "react";
 import MobileNavigation from "./MobileNavigation";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from '../../firebase-config';
 
-export default function Header() {
 
-    const [user, setUser] = useState({});
+export default function Header({user, getSearchResult}) {
 
-    onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser);
-    });
+
+    
 
     return (
         <div>
-            <Navigation user={user}/>
-            <MobileNavigation user={user}/>       
+            <MobileNavigation user={user} getSearchResult={getSearchResult}/>       
         </div>
     );
 }

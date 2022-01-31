@@ -1,4 +1,5 @@
 import './App.css';
+import { useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Header from './Components/Header/Header';
 import Home from './Pages/Home';
@@ -7,13 +8,32 @@ import Login from './Pages/Login';
 import SignIn from './Pages/SignIn';
 import NotFound from './Pages/NotFound';
 import { StyledContainer } from './Utils/Styled Components/StyledContainer';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './firebase-config';
 
 function App() {
+
+  const [user, setUser] = useState({});
+
+  onAuthStateChanged(auth, (currentUser) => {
+    let isMounted = true;
+    if(isMounted){
+        setUser(currentUser);
+    }
+    return () => { isMounted = false };
+
+});
+
+  const getSearchResult = (newSearch) => {
+    console.log(newSearch);
+  }
+
   return (
     <BrowserRouter>
-      <Header/>
+      <Header user={user} getSearchResult={getSearchResult} />
       <StyledContainer>
-        <Switch>
+        {user ? (
+          <Switch>
             <Route exact path="/">
               <Home />
             </Route>
@@ -29,7 +49,20 @@ function App() {
             <Route exact path="*">
               <NotFound />
             </Route>
+          </Switch>
+        ) : (
+          <Switch>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signin">
+              <SignIn />
+            </Route>
+            <Route exact path="*">
+              <NotFound />
+            </Route>
         </Switch>
+        )}
       </StyledContainer>
     </BrowserRouter>
   );

@@ -3,6 +3,7 @@ import { StyledH1 } from '../Utils/Styled Components/StyledText';
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase-config';
 import { useHistory } from 'react-router-dom';
+import { StyledMainContainer } from '../Utils/Styled Components/StyledContainer';
 
 export default function Login() {
     const navigate = useHistory();
@@ -21,8 +22,7 @@ export default function Login() {
 
     const login = async () => {
         try{
-            const user = await signInWithEmailAndPassword(auth, email, password);
-            console.log(user);
+            await signInWithEmailAndPassword(auth, email, password);
             navigate.push('/');
         }catch(error){
             console.error(error);
@@ -34,7 +34,7 @@ export default function Login() {
     };
 
     return (
-        <div>
+        <StyledMainContainer>
             {user ? (
                 <>
                     <StyledH1>Already logged in as {user?.email}</StyledH1>
@@ -60,6 +60,6 @@ export default function Login() {
             
             
 
-        </div>
+        </StyledMainContainer>
     )
 }

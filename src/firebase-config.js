@@ -10,6 +10,16 @@ const firebaseConfig = {
     messagingSenderId: "821561101415",
     appId: "1:821561101415:web:d4dd04859a26bae8e658c2"
   };
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyB_S54bk7ANrJyYKuAGq-x_FaMhXez2qx8",
+//   authDomain: "keeping-notes-cda49.firebaseapp.com",
+//   databaseURL: "https://keeping-notes-cda49-default-rtdb.firebaseio.com",
+//   projectId: "keeping-notes-cda49",
+//   storageBucket: "keeping-notes-cda49.appspot.com",
+//   messagingSenderId: "700232702987",
+//   appId: "1:700232702987:web:3a9a0dae8e4f9d292a7b0e"
+// };
   
   const app = initializeApp(firebaseConfig);
 
