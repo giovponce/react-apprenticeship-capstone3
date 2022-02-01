@@ -10,35 +10,54 @@ export default function Archive({term}) {
 
   const [notes, setNotes] = useState([]);
   const notesCollectionRef = collection(db, 'notes');
+  const [updatedDB, setUpdatedDB] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
     const fetchNotes = async () => {
-      if (isMounted){
         const data = await getDocs(notesCollectionRef);
         const allNotes = data.docs.map(doc => ({...doc.data(), id: doc.id}));
         setNotes(allNotes.filter(note => note.archived));
-      }
     }
 
     fetchNotes();
-    return () => { isMounted = false };
-  }, []);//eslint-disable-line
+    return () => { setUpdatedDB(false) };
+  }, [updatedDB]);//eslint-disable-line
 
   const onDelete = async (id) => {
     const noteDoc = doc(db, "notes", id);
-    await deleteDoc(noteDoc);
+    await deleteDoc(noteDoc).then(
+      setUpdatedDB(true)
+    );
   }
 
   const onEdit = async (id, updatedTitle, updatedContent, updatedColor) => {
-    if(updatedTitle || updatedContent){
+    if((updatedTitle || updatedContent) && updatedColor){
       const noteDoc = doc(db, "notes", id);
       const newNote = {
           title: updatedTitle,
           content: updatedContent,
           color: updatedColor
       }
-      await updateDoc(noteDoc, newNote);
+      await updateDoc(noteDoc, newNote).then(
+        setUpdatedDB(true)
+      );
+    }else if(updatedColor){
+      const noteDoc = doc(db, "notes", id);
+      const newNote = {
+          color: updatedColor
+      }
+      await updateDoc(noteDoc, newNote).then(
+        setUpdatedDB(true)
+      );
+    }else if(updatedTitle || updatedContent){
+      const noteDoc = doc(db, "notes", id);
+      const newNote = {
+          title: updatedTitle,
+          content: updatedContent
+      }
+      await updateDoc(noteDoc, newNote).then(
+        setUpdatedDB(true)
+      );
     }
   }
 
@@ -47,7 +66,9 @@ export default function Archive({term}) {
     const newNote = {
         archived: false
     }
-    await updateDoc(noteDoc, newNote);
+    await updateDoc(noteDoc, newNote).then(
+      setUpdatedDB(true)
+    );
 }
 
   return (

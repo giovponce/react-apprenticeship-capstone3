@@ -5,7 +5,7 @@ import Header from './Components/Header/Header';
 import Home from './Pages/Home';
 import Archive from './Pages/Archive';
 import Login from './Pages/Login';
-import SignIn from './Pages/SignIn';
+import SignUp from './Pages/SignUp';
 import NotFound from './Pages/NotFound';
 import { StyledContainer } from './Utils/Styled Components/StyledContainer';
 import { onAuthStateChanged } from "firebase/auth";
@@ -42,8 +42,8 @@ function App() {
             <Route exact path="/login">
               <Login />
             </Route>
-            <Route exact path="/signin">
-              <SignIn />
+            <Route exact path="/signup">
+              <SignUp />
             </Route>
             <Route exact path="/archive">
               <Archive term={term} />
@@ -57,8 +57,8 @@ function App() {
             <Route exact path="/login">
               <Login />
             </Route>
-            <Route exact path="/signin">
-              <SignIn />
+            <Route exact path="/signup">
+              <SignUp />
             </Route>
             <Route exact path="*">
               <NotFound />

@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
 import { StyledNoteContainer } from '../Utils/Styled Components/StyledContainer';
 import { StyledDescription, StyledTitle } from '../Utils/Styled Components/StyledText';
-import { StyledInputTitle, StyledInputContent, InputContainer, ButtonForCreation, StyledColorInput, ColorLabel } from '../Utils/Styled Components/StyledContainer';
+import { StyledInputTitle, StyledInputContent, InputContainer, ButtonForCreation, StyledColorInput, ColorLabel, BtnForIcons, StyledFlexContainer } from '../Utils/Styled Components/StyledContainer';
 import { MdOutlinePalette } from "react-icons/md";
+import { MdOutlineArchive, MdOutlineUnarchive, MdDeleteOutline, MdEditNote } from "react-icons/md";
 
 
 
 
 export default function Note({note, onDelete, onArchive, onUnArchive, id, onEdit, showArchive}) {
     const [editMode, setEditMode] = useState(false);
-    const [newTitle, setTitle] = useState('');
-    const [newContent, setContent] = useState('');
-    const [newColor, setColor] = useState('#ffffff');
+    const [newTitle, setNewTitle] = useState('');
+    const [newContent, setNewContent] = useState('');
+    const [newColor, setNewColor] = useState('');
 
 
     return (
-        <StyledNoteContainer color={note?.color}>
+        <StyledNoteContainer color={newColor ? newColor : note?.color}>
             {editMode ? (
                 <>
-                <InputContainer>
-                    <StyledInputTitle onChange={(event)=>{setTitle(event.target.value)}} type="text" placeholder="Title" />
-                    <StyledInputContent onChange={(event)=>{setContent(event.target.value)}} type="text" placeholder="Take a note..." />
+                <InputContainer color={newColor ? newColor : note?.color}>
+                    <StyledInputTitle onChange={(event)=>{setNewTitle(event.target.value)}} type="text" value={newTitle ?  newTitle : note?.title}/>
+                    <StyledInputContent onChange={(event)=>{setNewContent(event.target.value)}} type="text" value={newContent ? newContent : note?.content}/>
                     <ColorLabel><MdOutlinePalette/>
-                        <StyledColorInput onChange={(event)=>{setColor(event.target.value)}} type="color" value={newColor} list="presets"/>
+                        <StyledColorInput onChange={(event)=>{setNewColor(event.target.value)}} type="color" list="presets"/>
                         <datalist id="presets">
                         <option value="#ffffff"/>
                         <option value="#F28B82"/>
@@ -46,11 +47,13 @@ export default function Note({note, onDelete, onArchive, onUnArchive, id, onEdit
                 </>
             ) : (
                 <>
-                <StyledTitle>{note?.title}</StyledTitle>
-                <StyledDescription>{note?.content}</StyledDescription>
-                <button onClick={() => setEditMode(true)}>Edit</button>
-                {showArchive ? <button  onClick={() => onArchive(id)}>Archive</button> : <button onClick={()=>{onUnArchive(id)}}>Unarchive</button>}
-                <button onClick={() => onDelete(id)}>Delete</button>
+                    <StyledTitle>{note?.title}</StyledTitle>
+                    <StyledDescription>{note?.content}</StyledDescription>
+                    <StyledFlexContainer>
+                        {showArchive ? <BtnForIcons><MdOutlineArchive  onClick={() => onArchive(id)}/></BtnForIcons> : <BtnForIcons><MdOutlineUnarchive  onClick={()=>{onUnArchive(id)}}/></BtnForIcons>}
+                        <BtnForIcons><MdEditNote onClick={() => setEditMode(true)}/></BtnForIcons>
+                        <BtnForIcons><MdDeleteOutline onClick={() => onDelete(id)}/></BtnForIcons>
+                    </StyledFlexContainer>
                 </>
             )}
             

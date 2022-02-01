@@ -1,4 +1,4 @@
-import { StyledMobileNav, StyledLi } from "../../Utils/Styled Components/StyledNav";
+import { StyledMobileNav, StyledLi, StyledUl } from "../../Utils/Styled Components/StyledNav";
 import { StyledInputForHamburguer, StyledUlForHamburguer, StyledSpanForHamburguer, StyledHamburguerContainer, StyledLinkForHamburguer, StyledFakeLinkForHamburguer } from "../../Utils/Styled Components/StyledHamburguer";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase-config";
@@ -45,7 +45,16 @@ const MobileNavigation = ({ user, getSearchResult }) => {
                     </div>
                     </StyledFlexContainer>
                 ):(
-                    <StyledLinkForHamburguer to="/login">Login</StyledLinkForHamburguer>     
+                    <>
+                    <StyledUl>
+                        <StyledLi>
+                            <StyledLinkForHamburguer to="/login">Login</StyledLinkForHamburguer>
+                        </StyledLi>
+                        <StyledLi>
+                            <StyledLinkForHamburguer to="/signup">Sign up</StyledLinkForHamburguer>
+                        </StyledLi>
+                    </StyledUl>
+                    </>
                 )}
             </StyledHamburguerContainer>
         </StyledMobileNav>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { StyledH1 } from '../Utils/Styled Components/StyledText';
+import { StyledH1, ErrorMsg } from '../Utils/Styled Components/StyledText';
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase-config';
 import { useHistory } from 'react-router-dom';
-import { StyledMainContainer } from '../Utils/Styled Components/StyledContainer';
+import { LoginBtn, StyledInput, StyledMainContainer } from '../Utils/Styled Components/StyledContainer';
 
 export default function Login() {
     const navigate = useHistory();
@@ -26,6 +26,15 @@ export default function Login() {
             navigate.push('/');
         }catch(error){
             console.error(error);
+            if(error.message === 'Firebase: Error (auth/user-not-found).'){
+                document.getElementById('error').innerHTML = 'User not registered, please sign up';
+            }else if(error.message === 'Firebase: Error (auth/wrong-password).'){
+                document.getElementById('error').innerHTML = 'Wrong password';
+            }else if(error.message === 'Firebase: Error (auth/invalid-email).'){
+                document.getElementById('error').innerHTML = 'Invalid email';
+            }else{
+                document.getElementById('error').innerHTML = error.message;
+            }
         }
     };
 
@@ -43,17 +52,18 @@ export default function Login() {
             ):(
                 <>
                     <StyledH1>Login</StyledH1>
-                    <input type="text" placeholder="Email" 
+                    <StyledInput type="text" placeholder="Email" 
                         onChange={(event) => {
                             setEmail(event.target.value);
-                        }} />
-                    <input type="password" placeholder="Password" 
+                        }} /><br/><br/>
+                    <StyledInput type="password" placeholder="Password" 
                         onChange={(event) => {
                             setPassword(event.target.value);
-                        }} />
-                    <button onClick={login}>Login</button>
+                        }} /><br/><br/>
+                    <LoginBtn onClick={login}>Login</LoginBtn>
+                    <ErrorMsg id="error"></ErrorMsg>
 
-                    <p>New to this page? Please <a href="/signin">Sign In</a></p>
+                    <p>New to this page? Please <a href="/signup">Sign Up</a></p>
                 </>
             )}
             

@@ -5,6 +5,19 @@ export const Button = styled.button`
     font-family: sans-serif;
 `;
 
+export const LoginBtn = styled.button`
+    box-shadow: 5px 2px 18px #888888;
+    text-align: center;
+    background-color: #fff;
+    border: solid 1px #E4E4E4;
+    font-size: 1.2rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #F1F3F4;
+    }
+`;
+
 export const ButtonForCreation = styled.button`
     display: flex;
     justify-content: end;
@@ -137,4 +150,13 @@ export const ColorLabel = styled.label`
 export const StyledFlexContainer = styled.div`
     display: flex;
     justify-content: space-between;
+`;
+
+export const BtnForIcons = styled.button`
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
 `;

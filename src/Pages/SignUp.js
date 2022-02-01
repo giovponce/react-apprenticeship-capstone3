@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase-config';
 import { useHistory } from 'react-router-dom';
-import { StyledH1 } from '../Utils/Styled Components/StyledText';
-import { StyledMainContainer } from '../Utils/Styled Components/StyledContainer';
+import { StyledH1, ErrorMsg } from '../Utils/Styled Components/StyledText';
+import { StyledInput, StyledMainContainer, LoginBtn } from '../Utils/Styled Components/StyledContainer';
 
 
-export default function SignIn() {
+export default function SignUp() {
     const navigate = useHistory();
 
     const [registerEmail, setRegisterEmail] = useState('');
@@ -23,6 +23,15 @@ export default function SignIn() {
             navigate.push('/');
         }catch(error){
             console.error(error);
+            if(error.message === 'Firebase: Password should be at least 6 characters (auth/weak-password).'){
+                document.getElementById('error').innerHTML = 'Password should be at least 6 characters';
+            }else if(error.message === 'Firebase: Error (auth/invalid-email).'){
+                document.getElementById('error').innerHTML = 'Invalid email';
+            }else if(error.message === 'Firebase: Error (auth/email-already-in-use).'){
+                document.getElementById('error').innerHTML = 'Email already in use';
+            }else{
+                document.getElementById('error').innerHTML = error.message;
+            }
         }
     };
 
@@ -40,16 +49,17 @@ export default function SignIn() {
         ):(
             <> 
                 <StyledH1>Register</StyledH1>
-                <input 
+                <StyledInput 
                     type="text" placeholder="Email" 
                     onChange={(event) => {
                         setRegisterEmail(event.target.value);
-                    }}/>
-                <input type="password" placeholder="Password"
+                    }}/><br/><br/>
+                <StyledInput type="password" placeholder="Password"
                     onChange={(event) => {
                         setRegisterPassword(event.target.value);
-                    }} />
-                <button onClick={register}>Register</button>
+                    }} /><br/><br/>
+                <LoginBtn onClick={register}>Register</LoginBtn>
+                <ErrorMsg id="error"></ErrorMsg>
 
                 <p>Already have an account? Please <a href="/login">Log In</a></p>
             </>

@@ -51,3 +51,7 @@ export const StyledP = styled.p`
     text-align: center;
     padding-top: 3em;
 `;
+
+export const ErrorMsg = styled.p`
+    color: red;
+`;

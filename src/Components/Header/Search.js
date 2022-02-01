@@ -1,26 +1,31 @@
 import { SearchInput, SearchFormStyled } from "../../Utils/Styled Components/StyledSearch";
 import { Button } from "../../Utils/Styled Components/StyledContainer";
 import { useState } from "react";
+import { MdOutlineSearch, MdOutlineClose } from "react-icons/md";
 
 const SearchForm = ({ getSearchResult }) => {
 
   const [term, setTerm] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.preventDefault();
     getSearchResult(term);
   };
 
+  const iconStyle = {
+    position: "relative",
+    left: "1.5em",
+    color: "black"
+  };
 
 
   return (
     
       <SearchFormStyled
-        onSubmit={handleSubmit}
+        onSubmit={handleClick}
       >
+        <MdOutlineSearch style={iconStyle}/>
         <SearchInput
           type="search"
           placeholder="Search"
@@ -29,9 +34,7 @@ const SearchForm = ({ getSearchResult }) => {
           data-testid="search-input"
           onChange={(e) => setTerm(e.target.value)}
         />
-        <Button onClick={handleClick}>
-          Search
-        </Button>
+        {term ? () => <MdOutlineClose style={iconStyle} onClick={() => setTerm('')}/> : null}
       </SearchFormStyled>
   );
 };
