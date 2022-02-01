@@ -1,5 +1,4 @@
 import { SearchInput, SearchFormStyled } from "../../Utils/Styled Components/StyledSearch";
-import { Button } from "../../Utils/Styled Components/StyledContainer";
 import { useState } from "react";
 import { MdOutlineSearch, MdOutlineClose } from "react-icons/md";
 
