@@ -1,24 +1,72 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Header from './Components/Header/Header';
+import Home from './Pages/Home';
+import Archive from './Pages/Archive';
+import Login from './Pages/Login';
+import SignUp from './Pages/SignUp';
+import NotFound from './Pages/NotFound';
+import { StyledContainer } from './Utils/Styled Components/StyledContainer';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './firebase-config';
 
 function App() {
+
+  const [user, setUser] = useState({});
+  const [term, setTerm] = useState('');
+
+  onAuthStateChanged(auth, (currentUser) => {
+    let isMounted = true;
+    if(isMounted){
+        setUser(currentUser);
+    }
+    return () => { isMounted = false };
+
+});
+
+  const getSearchResult = (newSearch) => {
+    console.log(newSearch);
+    setTerm(newSearch)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Header user={user} getSearchResult={getSearchResult} />
+      <StyledContainer>
+        {user ? (
+          <Switch>
+            <Route exact path="/">
+              <Home term={term}/>
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signup">
+              <SignUp />
+            </Route>
+            <Route exact path="/archive">
+              <Archive term={term} />
+            </Route>
+            <Route exact path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+        ) : (
+          <Switch>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/signup">
+              <SignUp />
+            </Route>
+            <Route exact path="*">
+              <NotFound />
+            </Route>
+        </Switch>
+        )}
+      </StyledContainer>
+    </BrowserRouter>
   );
 }
 
